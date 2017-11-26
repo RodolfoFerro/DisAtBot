@@ -10,6 +10,9 @@ I've been thinking about trying to optimize this process for future situations, 
 
 DisAtBot would automate the process of reporting incidents via messaging platforms, such as Telegram, Facebook Messenger, Twitter, etc. ***This first approach is considering only Telegram as the messaging platform for this initial phase of implementation.***
 
+You can find DisAtBot @
+* Telegram: [https://t.me/DisAtBot](https://t.me/DisAtBot)
+
 A general process of DisAtBot is described in the following flow (wireframing):
 
 <img src="https://github.com/RodolfoFerro/dabot/blob/master/imgs/flow.png" alt="DisAtBot's main flow" width="80%">
