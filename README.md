@@ -56,7 +56,6 @@ The structure of this repo is as follows:
 ## Future work 📈
 
 * Create CONTRIBUTING file.
-* Create LICENSE file.
 * Create `geo`/`map` structure.
 * ...
 
