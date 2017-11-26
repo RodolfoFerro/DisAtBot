@@ -46,6 +46,7 @@ def set_lang(bot, update):
     global LANG
     LANG = query.data
 
+    logger.info(lang_selected[LANG])
     bot.edit_message_text(text=lang_selected[LANG],
                           chat_id=query.message.chat_id,
                           message_id=query.message.message_id)
