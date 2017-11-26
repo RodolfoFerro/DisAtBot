@@ -26,9 +26,11 @@
 *.sql
 *.sqlite
 
-# Credentials used #
-####################
+# Python scripts #
+##################
 credentials.py
+inlinekeyboard.py
+conversationbot.py
 
 # OS generated files #
 ######################
