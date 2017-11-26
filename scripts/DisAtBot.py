@@ -1,46 +1,92 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from credentials.py import *
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
+from credentials import *
+from lang_dict import *
+import logging
 
-updater = Updater(token=telegram_token)
-dispatcher = updater.dispatcher
+
+# Enable logging
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO)
+
+logger = logging.getLogger(__name__)
+
+# Local vars:
+LANG = "ES"
 
 
 def start(bot, update):
-    # Intro message
-    hi = "Hello, I'm DisAtBot. / Hola, soy DisAtBot. \n\n"
-    init = "To start, please select a language. / \
-Para iniciar, por favor selecciona un idioma."
-    bot.send_message(chat_id=update.message.chat_id, text=hi + init)
+    """
+    Start function. Displayed whenever the /start command is called.
+    This function sets the language of the bot.
+    """
+    # Create buttons to slect language:
+    keyboard = [[InlineKeyboardButton("ES", callback_data='ES'),
+                 InlineKeyboardButton("EN", callback_data='EN')]]
+
+    # Create initial message:
+    message = "Hey, I'm DisAtBot! / ¡Hey, soy DisAtBot! \n\n \
+Please select a language to start. / Por favor selecciona un idioma \
+para comenzar."
+
+    reply_markup = InlineKeyboardMarkup(keyboard)
+    update.message.reply_text(message, reply_markup=reply_markup)
+
+    return
 
 
-start_handler = CommandHandler('start', start)
-dispatcher.add_handler(start_handler)
+def set_lang(bot, update):
+    """
+    First handler with received data to set language globally.
+    """
+    # Set language:
+    query = update.callback_query
+    global LANG
+    LANG = query.data
 
-updater.start_polling()
-#
-#
-# def chem_data(bot, update):
-#     # Print user info:
-#     first = update.message.from_user.first_name
-#     last = update.message.from_user.last_name
-#     print("Request from: {} {}".format(first, last))
-#
-#     # Requested info:
-#     molecule = update.message.text
-#     mol_msg = "Molecule requested: {} \nSearching molecule...".format(molecule)
-#     bot.send_message(chat_id=update.message.chat_id, text=mol_msg)
-#
-#     # Search requested molecule:
-#     img, smiles = scraper(molecule)
-#     if smiles is None:
-#         error = "Molecule not found. Maybe the name is misswritten... (?)"
-#         bot.send_message(chat_id=update.message.chat_id, text=error)
-#     else:
-#         smiles_msg = "SMILES: {}".format(smiles)
-#         bot.send_message(chat_id=update.message.chat_id, text=smiles_msg)
-#         bot.send_photo(chat_id=update.message.chat_id,
-#                        photo=open('molecule.png', 'rb'))
-#
-#
-# drawing_handler = MessageHandler(Filters.text, chem_data)
-# dispatcher.add_handler(drawing_handler)
+    bot.edit_message_text(text=lang_selected[LANG],
+                          chat_id=query.message.chat_id,
+                          message_id=query.message.message_id)
+
+    return
+
+
+def help(bot, update):
+    """
+    Help function.
+    This displays a set of commands available for the bot.
+    """
+    update.message.reply_text("Use /start to restart DisAtBot.")
+
+
+def error(bot, update, error):
+    """Log Errors caused by Updates."""
+    logger.warning('Update "%s" caused error "%s"', update, error)
+
+
+def main():
+    """
+    Main function.
+    This controls all conversation and interactions with bot handlers.
+    """
+    # Create the Updater and pass it bot's token:
+    updater = Updater(telegram_token)
+
+    # Create handlers:
+    updater.dispatcher.add_handler(CommandHandler('start', start))
+    updater.dispatcher.add_handler(CallbackQueryHandler(set_lang))
+    updater.dispatcher.add_handler(CommandHandler('help', help))
+    updater.dispatcher.add_error_handler(error)
+
+    # Start DisAtBot:
+    updater.start_polling()
+
+    # Run the bot until the user presses Ctrl-C or the process
+    # receives SIGINT, SIGTERM or SIGABRT:
+    updater.idle()
+
+
+if __name__ == '__main__':
+    main()
