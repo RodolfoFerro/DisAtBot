@@ -1,6 +1,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from ._credentials.py import *
 
-updater = Updater(token='')
+updater = Updater(token=telegram_token)
 dispatcher = updater.dispatcher
 
 
