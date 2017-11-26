@@ -8,8 +8,20 @@ I've been thinking about trying to optimize this process for future situations, 
 
 ## About DABOT
 
-DABOT would automate the process of reporting incidents via messaging platforms, such as Telegram, Facebook Messenger, Twitter, etc. ***This first approach is considering Telegram as the messaging platform for this initial phase.***
+DABOT would automate the process of reporting incidents via messaging platforms, such as Telegram, Facebook Messenger, Twitter, etc. ***This first approach is considering only Telegram as the messaging platform for this initial phase.***
 
 A general process of DABOT is described in the following flow (wireframing):
 
 <img src="https://github.com/RodolfoFerro/dabot/blob/master/imgs/flow.png" alt="DABOT's main flow" width="70%">
+
+------
+
+## Structure
+
+The structure of this repo is as follows:
+
+- The [img](https://github.com/RodolfoFerro/dabot/tree/master/imgs) folder contains all images of this repo.
+- The [maps](https://github.com/RodolfoFerro/dabot/tree/master/maps) folder contains any map/geo-spacial document, such as geoJSON, etc.
+- The [scripts](https://github.com/RodolfoFerro/dabot/tree/master/scripts) folder contains all the scripts developed so far. Inside, a folder for each messaging platform can be found.
+
+------
