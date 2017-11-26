@@ -8,7 +8,7 @@ I've been thinking about trying to optimize this process for future situations, 
 
 ## About DABOT
 
-DABOT would automate the process of reporting incidents via messaging platforms, such as Telegram, Facebook Messenger, Twitter, etc.
+DABOT would automate the process of reporting incidents via messaging platforms, such as Telegram, Facebook Messenger, Twitter, etc. ***This first approach is considering Telegram as the messaging platform for this initial phase.***
 
 A general process of DABOT is described in the following flow (wireframing):
 
