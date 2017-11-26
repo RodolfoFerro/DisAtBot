@@ -17,6 +17,8 @@ A general process of DisAtBot is described in the following flow (wireframing):
 
 <img src="https://github.com/RodolfoFerro/dabot/blob/master/imgs/flow.png" alt="DisAtBot's main flow" width="80%">
 
+The main idea would be that each report should have an opened ticket that will end in a database which will be accessed by the corresponding government instance/public organization/NGO/etc. to validate the data and send the corresponding assistance.
+
 ------
 
 ## Requirements ⚙️
