@@ -1,4 +1,4 @@
-# DABOT: Disaster Attention Bot
+# DisAtBot: Disaster Attention Bot
 
 Since [September 19th, 2017](https://en.wikipedia.org/wiki/2017_Central_Mexico_earthquake) ([The Guardian](https://www.theguardian.com/world/live/2017/sep/20/mexico-city-earthquake-dozens-dead-powerful-quake-live-updates), [CNN](http://edition.cnn.com/2017/09/19/americas/mexico-earthquake/index.html)), and the following dates in which Mexico has faced several earthquakes, I've been wondering how could reports of damaged zones, people buried under rests of buildings, injuried people in need of medicines and other situations could be handled.
 
@@ -6,13 +6,13 @@ What was created by that time, *"[Verificado 19s](http://www.verificado19s.org/)
 
 I've been thinking about trying to optimize this process for future situations, not only for earthquakes, but for other natural disasters. This is why I'm trying to create a solution for this, and wanted to work specifically in this bot, which will automate this task in a better way.
 
-## About DABOT 🤖
+## About DisAtBot 🤖
 
-DABOT would automate the process of reporting incidents via messaging platforms, such as Telegram, Facebook Messenger, Twitter, etc. ***This first approach is considering only Telegram as the messaging platform for this initial phase of implementation.***
+DisAtBot would automate the process of reporting incidents via messaging platforms, such as Telegram, Facebook Messenger, Twitter, etc. ***This first approach is considering only Telegram as the messaging platform for this initial phase of implementation.***
 
-A general process of DABOT is described in the following flow (wireframing):
+A general process of DisAtBot is described in the following flow (wireframing):
 
-<img src="https://github.com/RodolfoFerro/dabot/blob/master/imgs/flow.png" alt="DABOT's main flow" width="80%">
+<img src="https://github.com/RodolfoFerro/dabot/blob/master/imgs/flow.png" alt="DisAtBot's main flow" width="80%">
 
 ------
 
@@ -58,7 +58,6 @@ The structure of this repo is as follows:
 * Create CONTRIBUTING file.
 * Create LICENSE file.
 * Create `geo`/`map` structure.
-* Create DABOT with [BotFather](https://t.me/BotFather).
 * ...
 
 ## Contributing 👩🏽‍💻👨🏻‍💻
