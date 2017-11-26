@@ -10,11 +10,14 @@
 # ===============================================================
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import ConversationHandler, CallbackQueryHandler
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Updater, CommandHandler, CallbackQueryHandler
-from credentials import *
+from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from lang_dict import *
 import logging
+
+# You might need to add your tokens to this file...
+from credentials import *
 
 
 # Enable logging
@@ -24,8 +27,9 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-# Local vars:
+# Global vars:
 LANG = "ES"
+MENU, REPORT, MAP, FAQ, ABOUT = range(5)
 
 
 def start(bot, update):
@@ -42,7 +46,7 @@ def start(bot, update):
 Please select a language to start. / Por favor selecciona un idioma \
 para comenzar."
 
-    reply_markup = InlineKeyboardMarkup(keyboard)
+    reply_markup = InlineKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text(message, reply_markup=reply_markup)
 
     return
@@ -58,11 +62,35 @@ def set_lang(bot, update):
     LANG = query.data
 
     logger.info(lang_selected[LANG])
-    bot.edit_message_text(text=lang_selected[LANG],
-                          chat_id=query.message.chat_id,
-                          message_id=query.message.message_id)
+    bot.send_message(text=lang_selected[LANG],
+                     chat_id=query.message.chat_id,
+                     message_id=query.message.message_id)
+
+    return MENU
+
+
+def menu(bot, update):
+    """
+    Main menu function.
+    This will display the options from the main menu.
+    """
+    # Create buttons to slect language:
+    keyboard = [[InlineKeyboardButton(send_report[LANG], callback_data='REP'),
+                 InlineKeyboardButton(view_map[LANG], callback_data='MAP')],
+                [InlineKeyboardButton(view_faq[LANG], callback_data='FAQ'),
+                 InlineKeyboardButton(view_about[LANG], callback_data='ABT')],
+                [InlineKeyboardButton(back2menu[LANG], callback_data='BACK')]]
+
+    reply_markup = InlineKeyboardMarkup(keyboard, one_time_keyboard=True)
+    update.message.reply_text(main_menu[LANG], reply_markup=reply_markup)
 
     return
+
+
+def set_action(bot, update):
+    """
+    """
+    pass
 
 
 def help(bot, update):
@@ -71,6 +99,19 @@ def help(bot, update):
     This displays a set of commands available for the bot.
     """
     update.message.reply_text("Use /start to restart DisAtBot.")
+
+
+def cancel(bot, update):
+    """
+    User cancelation function.
+    Cancel conersation by user.
+    """
+    user = update.message.from_user
+    logger.info("User %s canceled the conversation.", user.first_name)
+    update.message.reply_text(goodbye[LANG],
+                              reply_markup=ReplyKeyboardRemove())
+
+    return ConversationHandler.END
 
 
 def error(bot, update, error):
@@ -86,11 +127,40 @@ def main():
     # Create the Updater and pass it bot's token:
     updater = Updater(telegram_token)
 
-    # Create handlers:
-    updater.dispatcher.add_handler(CommandHandler('start', start))
-    updater.dispatcher.add_handler(CallbackQueryHandler(set_lang))
-    updater.dispatcher.add_handler(CommandHandler('help', help))
-    updater.dispatcher.add_error_handler(error)
+    # =============================
+    # Get the dispatcher to register handlers:
+    dp = updater.dispatcher
+
+    # Add conversation handler with the states
+    # MENU, REPORT, MAP, FAQ and ABOUT:
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', start)],
+        states={
+            MENU: [CommandHandler('menu', menu,
+                   CallbackQueryHandler(set_action))],
+            # REPORT: [MessageHandler(Filters.photo, photo),
+            #         CommandHandler('skip', skip_photo)],
+            # MAP: [MessageHandler(Filters.location, location),
+            #            CommandHandler('skip', skip_location)],
+            # FAQ: [MessageHandler(Filters.text, bio)],
+            # ABOUT: [MessageHandler(Filters.text, bio)]
+        },
+        fallbacks=[CommandHandler('cancel', cancel)]
+    )
+
+    dp.add_handler(conv_handler)
+
+    # log all errors
+    dp.add_error_handler(error)
+
+    # =============================
+    # # Create handlers:
+    # updater.dispatcher.add_handler(CommandHandler('start', start))
+    # updater.dispatcher.add_handler(CallbackQueryHandler(set_lang))
+    # updater.dispatcher.add_handler(CommandHandler('menu', menu))
+    # updater.dispatcher.add_handler(CallbackQueryHandler(set_action))
+    # updater.dispatcher.add_handler(CommandHandler('help', help))
+    # updater.dispatcher.add_error_handler(error)
 
     # Start DisAtBot:
     updater.start_polling()
