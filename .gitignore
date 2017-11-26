@@ -26,6 +26,10 @@
 *.sql
 *.sqlite
 
+# Credentials used #
+####################
+credentials.py
+
 # OS generated files #
 ######################
 .DS_Store
