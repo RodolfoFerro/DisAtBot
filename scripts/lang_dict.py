@@ -49,6 +49,11 @@ goodbye = {
     "EN": "Bye!"
 }
 
+selection = {
+    "ES": "Opción seleccionada: {}",
+    "EN": "Selected option: {}"
+}
+
 template = {
     "ES": "",
     "EN": ""

@@ -29,7 +29,7 @@ logger = logging.getLogger(__name__)
 
 # Global vars:
 LANG = "ES"
-MENU, REPORT, MAP, FAQ, ABOUT = range(5)
+INIT, MENU, SET, REPORT, MAP, FAQ, ABOUT, BACK = range(8)
 
 
 def start(bot, update):
@@ -49,7 +49,7 @@ para comenzar."
     reply_markup = InlineKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text(message, reply_markup=reply_markup)
 
-    return
+    return INIT
 
 
 def set_lang(bot, update):
@@ -75,22 +75,26 @@ def menu(bot, update):
     This will display the options from the main menu.
     """
     # Create buttons to slect language:
-    keyboard = [[InlineKeyboardButton(send_report[LANG], callback_data='REP'),
-                 InlineKeyboardButton(view_map[LANG], callback_data='MAP')],
-                [InlineKeyboardButton(view_faq[LANG], callback_data='FAQ'),
-                 InlineKeyboardButton(view_about[LANG], callback_data='ABT')],
-                [InlineKeyboardButton(back2menu[LANG], callback_data='BACK')]]
+    keyboard = [[InlineKeyboardButton(send_report[LANG], callback_data=REPORT),
+                 InlineKeyboardButton(view_map[LANG], callback_data=MAP)],
+                [InlineKeyboardButton(view_faq[LANG], callback_data=FAQ),
+                 InlineKeyboardButton(view_about[LANG], callback_data=ABOUT)]]
 
     reply_markup = InlineKeyboardMarkup(keyboard, one_time_keyboard=True)
     update.message.reply_text(main_menu[LANG], reply_markup=reply_markup)
 
-    return
+    return SET
 
 
 def set_action(bot, update):
     """
+    Set option selected from menu.
     """
-    pass
+    query = update.callback_query
+    option = query.data
+
+    logger.info(selection[LANG].format(option))
+    return option
 
 
 def help(bot, update):
@@ -136,8 +140,12 @@ def main():
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
         states={
-            MENU: [CommandHandler('menu', menu,
-                   CallbackQueryHandler(set_action))],
+            INIT: [CallbackQueryHandler(set_lang)],
+
+            MENU: [CommandHandler('menu', menu)],
+
+            SET: [CallbackQueryHandler(set_action)],
+
             # REPORT: [MessageHandler(Filters.photo, photo),
             #         CommandHandler('skip', skip_photo)],
             # MAP: [MessageHandler(Filters.location, location),
