@@ -49,19 +49,17 @@ The structure of this repo is as follows:
 - The [scripts](https://github.com/RodolfoFerro/dabot/tree/master/scripts) folder contains all the scripts developed so far. Inside, a folder for each messaging platform can be found.
 - The [`requirements.txt`](https://github.com/RodolfoFerro/dabot/blob/master/requirements.txt) file contains a listing of the required packages with their respective versions for an easy `pip` installation. *Recommended.*
 
-------
-
 ## Implementations so far 💻
+
+------
 
 ## Future work 📈
 
-[ ] Create CONTRIBUTING file.
-[ ] Create LICENSE file.
-[ ] Create `geo`/`map` structure.
-[ ] Create DABOT with [BotFather](https://t.me/BotFather).
-[ ] ...
-
-------
+* Create CONTRIBUTING file.
+* Create LICENSE file.
+* Create `geo`/`map` structure.
+* Create DABOT with [BotFather](https://t.me/BotFather).
+* ...
 
 ## Contributing 👩🏽‍💻👨🏻‍💻
 
