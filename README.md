@@ -12,4 +12,4 @@ DABOT would automate the process of reporting incidents via messaging platforms,
 
 A general process of DABOT is described in the following flow (wireframing):
 
-![DABOT's main flow](https://github.com/RodolfoFerro/dabot/blob/master/imgs/flow.png)
+<img src="https://github.com/RodolfoFerro/dabot/blob/master/imgs/flow.png" alt="DABOT's main flow" width="50%">
