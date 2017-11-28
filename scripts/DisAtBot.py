@@ -9,8 +9,8 @@
 # according to the license provided and its conditions.
 # ===============================================================
 
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from telegram.ext import ConversationHandler, CallbackQueryHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, RegexHandler
+from telegram.ext import ConversationHandler, CallbackQueryHandler, Filters
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from lang_dict import *
@@ -28,8 +28,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Global vars:
-LANG = "ES"
-INIT, MENU, SET, REPORT, MAP, FAQ, ABOUT, BACK = range(8)
+LANG = "EN"
+SET_LANG, MENU, SET_STAT, REPORT, MAP, FAQ, ABOUT, LOCATION = range(8)
+STATE = SET_LANG
 
 
 def start(bot, update):
@@ -38,18 +39,19 @@ def start(bot, update):
     This function sets the language of the bot.
     """
     # Create buttons to slect language:
-    keyboard = [[InlineKeyboardButton("ES", callback_data='ES'),
-                 InlineKeyboardButton("EN", callback_data='EN')]]
+    keyboard = [['ES', 'EN']]
 
     # Create initial message:
-    message = "Hey, I'm DisAtBot! / ¡Hey, soy DisAtBot! \n\n \
+    message = "Hey, I'm DisAtBot! / ¡Hey, soy DisAtBot! \n\n\
 Please select a language to start. / Por favor selecciona un idioma \
 para comenzar."
 
-    reply_markup = InlineKeyboardMarkup(keyboard, one_time_keyboard=True)
+    reply_markup = ReplyKeyboardMarkup(keyboard,
+                                       one_time_keyboard=True,
+                                       resize_keyboard=True)
     update.message.reply_text(message, reply_markup=reply_markup)
 
-    return INIT
+    return SET_LANG
 
 
 def set_lang(bot, update):
@@ -57,14 +59,13 @@ def set_lang(bot, update):
     First handler with received data to set language globally.
     """
     # Set language:
-    query = update.callback_query
     global LANG
-    LANG = query.data
+    LANG = update.message.text
+    user = update.message.from_user
 
-    logger.info(lang_selected[LANG])
-    bot.send_message(text=lang_selected[LANG],
-                     chat_id=query.message.chat_id,
-                     message_id=query.message.message_id)
+    logger.info("Language set by {} to {}.".format(user.first_name, LANG))
+    update.message.reply_text(lang_selected[LANG],
+                              reply_markup=ReplyKeyboardRemove())
 
     return MENU
 
@@ -75,26 +76,101 @@ def menu(bot, update):
     This will display the options from the main menu.
     """
     # Create buttons to slect language:
-    keyboard = [[InlineKeyboardButton(send_report[LANG], callback_data=REPORT),
-                 InlineKeyboardButton(view_map[LANG], callback_data=MAP)],
-                [InlineKeyboardButton(view_faq[LANG], callback_data=FAQ),
-                 InlineKeyboardButton(view_about[LANG], callback_data=ABOUT)]]
+    keyboard = [[send_report[LANG], view_map[LANG]],
+                [view_faq[LANG], view_about[LANG]]]
 
-    reply_markup = InlineKeyboardMarkup(keyboard, one_time_keyboard=True)
+    reply_markup = ReplyKeyboardMarkup(keyboard,
+                                       one_time_keyboard=True,
+                                       resize_keyboard=True)
+
+    user = update.message.from_user
+    logger.info("Menu command requested by {}.".format(user.first_name))
     update.message.reply_text(main_menu[LANG], reply_markup=reply_markup)
 
-    return SET
+    return SET_STAT
 
 
-def set_action(bot, update):
+def set_state(bot, update):
     """
     Set option selected from menu.
     """
-    query = update.callback_query
-    option = query.data
+    # Set state:
+    global STATE
+    user = update.message.from_user
+    if update.message.text == send_report[LANG]:
+        STATE = REPORT
+        report(bot, update)
+        return LOCATION
+    elif update.message.text == view_map[LANG]:
+        STATE = MAP
+        vmap(bot, update)
+        return MENU
+    elif update.message.text == view_faq[LANG]:
+        STATE = FAQ
+        faq(bot, update)
+        return MENU
+    elif update.message.text == view_about[LANG]:
+        STATE = ABOUT
+        about_bot(bot, update)
+        return MENU
+    else:
+        STATE = MENU
+        return MENU
 
-    logger.info(selection[LANG].format(option))
-    return option
+
+def report(bot, update):
+    """
+    FAQ function. Displays FAQ about disaster situations.
+    """
+    user = update.message.from_user
+    logger.info("Report requested by {}.".format(user.first_name))
+    update.message.reply_text(loc_request[LANG])
+    bot.send_message(chat_id=update.message.chat_id, text=back2menu[LANG])
+    return
+
+
+def location(bot, update):
+    user = update.message.from_user
+    user_location = update.message.location
+    logger.info("Location of {}: ({}, {})".format(
+                user.first_name, user_location.latitude,
+                user_location.longitude))
+    update.message.reply_text(loc_aquired[LANG])
+    bot.send_message(chat_id=update.message.chat_id, text=back2menu[LANG])
+    return MENU
+
+
+def vmap(bot, update):
+    """
+    View map function. In development...
+    """
+    user = update.message.from_user
+    logger.info("Map requested by {}.".format(user.first_name))
+    bot.send_message(chat_id=update.message.chat_id, text=map_info[LANG])
+    bot.send_message(chat_id=update.message.chat_id, text=back2menu[LANG])
+    return
+
+
+def faq(bot, update):
+    """
+    FAQ function. Displays FAQ about disaster situations.
+    """
+    user = update.message.from_user
+    logger.info("FAQ requested by {}.".format(user.first_name))
+    bot.send_message(chat_id=update.message.chat_id, text=faq_info[LANG])
+    bot.send_message(chat_id=update.message.chat_id, text=back2menu[LANG])
+    return
+
+
+def about_bot(bot, update):
+    """
+    About function. Displays info about DisAtBot.
+    """
+    user = update.message.from_user
+    logger.info("About info requested by {}.".format(user.first_name))
+    bot.send_message(chat_id=update.message.chat_id, text=about_info[LANG])
+    bot.send_message(chat_id=update.message.chat_id, text=back2menu[LANG])
+    return
 
 
 def help(bot, update):
@@ -102,7 +178,10 @@ def help(bot, update):
     Help function.
     This displays a set of commands available for the bot.
     """
-    update.message.reply_text("Use /start to restart DisAtBot.")
+    user = update.message.from_user
+    logger.info("User {} asked for help.".format(user.first_name))
+    update.message.reply_text(help_info[LANG],
+                              reply_markup=ReplyKeyboardRemove())
 
 
 def cancel(bot, update):
@@ -111,7 +190,7 @@ def cancel(bot, update):
     Cancel conersation by user.
     """
     user = update.message.from_user
-    logger.info("User %s canceled the conversation.", user.first_name)
+    logger.info("User {} canceled the conversation.".format(user.first_name))
     update.message.reply_text(goodbye[LANG],
                               reply_markup=ReplyKeyboardRemove())
 
@@ -124,51 +203,45 @@ def error(bot, update, error):
 
 
 def main():
-    """
-    Main function.
-    This controls all conversation and interactions with bot handlers.
-    """
-    # Create the Updater and pass it bot's token:
+    global LANG
+    # Create the EventHandler and pass it your bot's token.
     updater = Updater(telegram_token)
 
-    # =============================
     # Get the dispatcher to register handlers:
     dp = updater.dispatcher
 
-    # Add conversation handler with the states
-    # MENU, REPORT, MAP, FAQ and ABOUT:
+    # Add conversation handler with predefined states:
     conv_handler = ConversationHandler(
         entry_points=[CommandHandler('start', start)],
+
         states={
-            INIT: [CallbackQueryHandler(set_lang)],
+            SET_LANG: [RegexHandler('^(ES|EN)$', set_lang)],
 
             MENU: [CommandHandler('menu', menu)],
 
-            SET: [CallbackQueryHandler(set_action)],
+            SET_STAT: [RegexHandler(
+                        '^({}|{}|{}|{})$'.format(
+                            send_report['ES'], view_map['ES'],
+                            view_faq['ES'], view_about['ES']),
+                        set_state),
+                       RegexHandler(
+                        '^({}|{}|{}|{})$'.format(
+                            send_report['EN'], view_map['EN'],
+                            view_faq['EN'], view_about['EN']),
+                        set_state)],
 
-            # REPORT: [MessageHandler(Filters.photo, photo),
-            #         CommandHandler('skip', skip_photo)],
-            # MAP: [MessageHandler(Filters.location, location),
-            #            CommandHandler('skip', skip_location)],
-            # FAQ: [MessageHandler(Filters.text, bio)],
-            # ABOUT: [MessageHandler(Filters.text, bio)]
+            LOCATION: [MessageHandler(Filters.location, location),
+                       CommandHandler('menu', menu)]
         },
-        fallbacks=[CommandHandler('cancel', cancel)]
+
+        fallbacks=[CommandHandler('cancel', cancel),
+                   CommandHandler('help', help)]
     )
 
     dp.add_handler(conv_handler)
 
-    # log all errors
+    # Log all errors:
     dp.add_error_handler(error)
-
-    # =============================
-    # # Create handlers:
-    # updater.dispatcher.add_handler(CommandHandler('start', start))
-    # updater.dispatcher.add_handler(CallbackQueryHandler(set_lang))
-    # updater.dispatcher.add_handler(CommandHandler('menu', menu))
-    # updater.dispatcher.add_handler(CallbackQueryHandler(set_action))
-    # updater.dispatcher.add_handler(CommandHandler('help', help))
-    # updater.dispatcher.add_error_handler(error)
 
     # Start DisAtBot:
     updater.start_polling()
