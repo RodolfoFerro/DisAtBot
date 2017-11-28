@@ -29,7 +29,7 @@
 # Python scripts #
 ##################
 __pycache__
-credentials.py
+# credentials.py
 inlinekeyboard.py
 conversationbot.py
 
