@@ -14,6 +14,7 @@ from telegram.ext import ConversationHandler, CallbackQueryHandler, Filters
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from lang_dict import *
+from geo_app import *
 import logging
 
 # You might need to add your tokens to this file...
@@ -135,6 +136,8 @@ def location(bot, update):
     logger.info("Location of {}: ({}, {})".format(
                 user.first_name, user_location.latitude,
                 user_location.longitude))
+    report_map = geo_app()
+    report_map.append_data(user_location.latitude, user_location.longitude)
     update.message.reply_text(loc_aquired[LANG])
     bot.send_message(chat_id=update.message.chat_id, text=back2menu[LANG])
     return MENU
@@ -148,6 +151,11 @@ def vmap(bot, update):
     logger.info("Map requested by {}.".format(user.first_name))
     bot.send_message(chat_id=update.message.chat_id, text=map_info[LANG])
     bot.send_message(chat_id=update.message.chat_id, text=back2menu[LANG])
+
+    # View map locally:
+    report_map = geo_app()
+    report_map.latlong_to_coords()
+    report_map.visualize()
     return
 
 
