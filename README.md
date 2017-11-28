@@ -51,10 +51,13 @@ The structure of this repo is as follows:
 
 - The [img](https://github.com/RodolfoFerro/dabot/tree/master/imgs) folder contains all images of this repo.
 - The [maps](https://github.com/RodolfoFerro/dabot/tree/master/maps) folder contains any map/geo-spacial document, such as geoJSON, etc.
-- The [scripts](https://github.com/RodolfoFerro/dabot/tree/master/scripts) folder contains all the scripts developed so far. Inside, a folder for each messaging platform can be found.
+- The [scripts](https://github.com/RodolfoFerro/dabot/tree/master/scripts) folder contains all the scripts developed so far.
 - The [`requirements.txt`](https://github.com/RodolfoFerro/dabot/blob/master/requirements.txt) file contains a listing of the required packages with their respective versions for an easy `pip` installation. *Recommended.*
 
 ## Implementations so far 💻
+
+- [`DisAtBot.py`](https://github.com/RodolfoFerro/DisAtBot/blob/master/scripts/DisAtBot.py), the script that contains the bot for Telegram.
+- [`lang_dict.py`](https://github.com/RodolfoFerro/DisAtBot/blob/master/scripts/lang_dict.py), the script with all the conversational dictionaries for two languages: English (EN) and Spanish (ES).
 
 ------
 
@@ -62,6 +65,7 @@ The structure of this repo is as follows:
 
 * Create CONTRIBUTING file.
 * Create `geo`/`map` structure.
+* Create map visualization for messaging platforms.
 * ...
 
 ## Contributing 👩🏽‍💻👨🏻‍💻
