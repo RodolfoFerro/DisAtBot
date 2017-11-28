@@ -66,8 +66,8 @@ The structure of this repo is as follows:
 ## Future work 📈
 
 * Create CONTRIBUTING file.
-* Create `geo`/`map` structure.
 * Create map visualization for messaging platforms.
+* Add a SQL type DB.
 * ...
 
 ## Contributing 👩🏽‍💻👨🏻‍💻
