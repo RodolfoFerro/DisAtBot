@@ -7,6 +7,7 @@
 > **"El jueves negro que cambió a México"**
 > – Emilio Viale, 1985.
 
+
 ## A bit of context...
 
 Since [September 19th, 2017](https://en.wikipedia.org/wiki/2017_Central_Mexico_earthquake) ([The Guardian](https://www.theguardian.com/world/live/2017/sep/20/mexico-city-earthquake-dozens-dead-powerful-quake-live-updates), [CNN](http://edition.cnn.com/2017/09/19/americas/mexico-earthquake/index.html)), and the following dates in which Mexico has faced several earthquakes, I've been wondering how could damaged zones reports, people buried under rests of buildings, injured people in need of medicines and other situations could be handled.
@@ -58,7 +59,7 @@ python DisAtBot.py
 
 ## Implementing DisAtBot
 
-The first issue addressed during the development of the Telegram bot was the creation of menu buttons for an easy interaction with the user. The second –and main– issue addressed was the conversation handler. A finite state machine was needed in order to preserve the desired flow and the responses needed to be processed for each state.
+The first issue addressed during the development of the Telegram bot was the creation of menu buttons for an easy interaction with the user. The second –*and main*– issue addressed was the conversation handler. A finite state machine was needed in order to preserve the desired flow and the responses needed to be processed for each state.
 
 I won’t go too deep in the explanation, but the following snippets will show how these issues were solved.
 
