@@ -97,10 +97,88 @@ We now understand the menu creation and handling. The reason of using buttons is
 
 Now about the conversation handler... It was the main issue during the development of this first phase. As I mentioned before, a finite state machine is needed. In it we're able to set the state or step of the flow where we're at. The Telegram's `ConversationHandler` takes care about that, and as part of its parameters the set of states have to be passed. This conversation handler ends up being the finite state machine (which handles each state), but also each state needs to handle its respective information (button responses, etc.).
 
-A demo of DisAtBot can be seen [in here](https://drive.google.com/file/d/1dOvF17AYKiic85HmzMjnK5Qza2Tg0PNw/view)!
+The snippet with the main function that contains the conversation handler is here:
+
+```python
+def main():
+    """
+    Main function.
+    This function handles the conversation flow by setting
+    states on each step of the flow. Each state has its own
+    handler for the interaction with the user.
+    """
+    global LANG
+    # Create the EventHandler and pass it your bot's token.
+    updater = Updater(telegram_token)
+
+    # Get the dispatcher to register handlers:
+    dp = updater.dispatcher
+
+    # Add conversation handler with predefined states:
+    conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', start)],
+
+        states={
+            SET_LANG: [RegexHandler('^(ES|EN)$', set_lang)],
+
+            MENU: [CommandHandler('menu', menu)],
+
+            SET_STAT: [RegexHandler(
+                        '^({}|{}|{}|{})$'.format(
+                            send_report['ES'], view_map['ES'],
+                            view_faq['ES'], view_about['ES']),
+                        set_state),
+                       RegexHandler(
+                        '^({}|{}|{}|{})$'.format(
+                            send_report['EN'], view_map['EN'],
+                            view_faq['EN'], view_about['EN']),
+                        set_state)],
+
+            LOCATION: [MessageHandler(Filters.location, location),
+                       CommandHandler('menu', menu)]
+        },
+
+        fallbacks=[CommandHandler('cancel', cancel),
+                   CommandHandler('help', help)]
+    )
+
+    dp.add_handler(conv_handler)
+
+    # Log all errors:
+    dp.add_error_handler(error)
+
+    # Start DisAtBot:
+    updater.start_polling()
+
+    # Run the bot until the user presses Ctrl-C or the process
+    # receives SIGINT, SIGTERM or SIGABRT:
+    updater.idle()
+```
+
+It might seem a bit confuse since I haven't explained totally the usage of each line, but most of this lines can easily be deducted. Some observations to help with this:
+
+- The conversation handler has the states of the flow.
+- It also has entry points (such as the `start` function), and fallbacks (such as the `cancel` and `help` functions).
+- This main function also contains some error handlers.
+- A global `LANG` variable is used, since the implementation has been done for English and Spanish... Oh, yes, I forgot to mention that...
+
+**You're able to interact with this bot in English or Spanish, since I created dictionaries for each interaction in both languages.**
+
+As I said previously, this hasn't gone very deep with implementation details, but some issues faced during the coding are explained with these snippets. If you want to check the full code of this bot, you can [go here](https://github.com/RodolfoFerro/DisAtBot/tree/master/scripts). There you'll find the main script and the language dictionaries.
+
+Some other features implemented were the geolocation handling and the display of some info with the `About` and `FAQ` sections. But the best way to know about this project is by watching it working, so...
+
+#### A demo of DisAtBot can be seen [in here](https://drive.google.com/file/d/1dOvF17AYKiic85HmzMjnK5Qza2Tg0PNw/view)!
 
 ## Future work
 
+You might thought that some of the requirements haven't been mentioned/used so far. The thing is that as part of the improvement of the future development a map visualization it's being thought (any suggestion for this is welcome) and what has been done so far is a system that creates a GeoJSON file from the locations acquired. This leads to think and cook a better solution (as you probably saw in the [demo video](https://drive.google.com/file/d/1dOvF17AYKiic85HmzMjnK5Qza2Tg0PNw/view)).
+
+Another thing to be added might be a website to explain the main use for this bot, you know, maybe a wiki –*kinda*– site?
+
+Besides that, the obvious developments are also considered for the future work: Facebook Messenger, Twitter and other platforms.
+
+Any other idea for this? Feel free to [contribute](https://github.com/RodolfoFerro/DisAtBot/blob/master/CONTRIBUTING.md)!
 
 
 ## Contributing
