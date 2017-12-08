@@ -35,6 +35,7 @@ About use cases, the idea is that any user would interact by selecting options f
 
 The next step would be that an open ticket would be created, and it’d end in a database which will be accessed by the corresponding government instance/public organization/NGO/etc. to validate the data and send the corresponding assistance. When no more help is needed, or the situation is under absolutely control, then it’d turn into a closed ticket.
 
+
 ## Requirements for DisAtBot
 
 First of all, we will need several requirements. You’re able to clone the repo ([https://github.com/RodolfoFerro/DisAtBot](https://github.com/RodolfoFerro/DisAtBot)) and have the code. Besides [Python 3.6](https://www.python.org/downloads/) (the version that I’m using for this project) we will be using the following packages:
@@ -56,6 +57,7 @@ And install all packages needed. Now we’re able to access the scripts folder a
 ```bash
 python DisAtBot.py
 ```
+
 
 ## Implementing DisAtBot
 
@@ -171,6 +173,7 @@ As I said previously, this hasn't gone very deep with implementation details, bu
 Some other features implemented were the geolocation handling and the display of some info with the `About` and `FAQ` sections. But the best way to know about this project is by watching it working, so...
 
 #### A demo of DisAtBot can be seen [in here](https://drive.google.com/file/d/1dOvF17AYKiic85HmzMjnK5Qza2Tg0PNw/view)!
+
 
 ## Future work
 
