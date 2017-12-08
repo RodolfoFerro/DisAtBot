@@ -91,6 +91,12 @@ As you can see, the `keyboard` variable is a list that contains the four buttons
 <img src="https://github.com/RodolfoFerro/DisAtBot/blob/master/imgs/screenshot_menu.jpg" width="35%">
 </center>
 
+Following with the code, a `ReplyMarkup` is needed to handle the button responses, and it specifies the layout of the menu: if only one menu is displayed, if it needs to be resized, etc. A logger is used for the bot, and the `update.message.reply(...)` function is used to update the displayed text according to the response from the user. The `SET_STAT` variable returned in this function is an integer variable (predefined at the very beginning) to return the state at that time, in order to follow with the flow.
+
+We now understand the menu creation and handling. The reason of using buttons is that since we want a quick interaction for an emergency situation during the interaction with the bot, this seems to do the trick. This was thought while the UX and UI were importantly considered under the concerned bot usage (again, disaster situations).
+
+Now about the conversation handler... It was the main issue during the development of this first phase. As I mentioned before, a finite state machine is needed. In it we're able to set the state or step of the flow where we're at. The Telegram's `ConversationHandler` takes care about that, and as part of its parameters the set of states have to be passed. This conversation handler ends up being the finite state machine (which handles each state), but also each state needs to handle its respective information (button responses, etc.).
+
 A demo of DisAtBot can be seen [in here](https://drive.google.com/file/d/1dOvF17AYKiic85HmzMjnK5Qza2Tg0PNw/view)!
 
 ## Future work
