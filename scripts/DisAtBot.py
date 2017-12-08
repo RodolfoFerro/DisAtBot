@@ -211,6 +211,12 @@ def error(bot, update, error):
 
 
 def main():
+    """
+    Main function.
+    This function handles the conversation flow by setting
+    states on each step of the flow. Each state has its own
+    handler for the interaction with the user.
+    """
     global LANG
     # Create the EventHandler and pass it your bot's token.
     updater = Updater(telegram_token)
