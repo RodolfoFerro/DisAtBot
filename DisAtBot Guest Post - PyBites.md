@@ -174,9 +174,7 @@ Some other features implemented were the geolocation handling and the display of
 
 You might thought that some of the requirements haven't been mentioned/used so far. The thing is that as part of the improvement of the future development a map visualization it's being thought (any suggestion for this is welcome) and what has been done so far is a system that creates a GeoJSON file from the locations acquired. This leads to think and cook a better solution (as you probably saw in the [demo video](https://drive.google.com/file/d/1dOvF17AYKiic85HmzMjnK5Qza2Tg0PNw/view)).
 
-Another thing to be added might be a website to explain the main use for this bot, you know, maybe a wiki –*kinda*– site?
-
-Besides that, the obvious developments are also considered for the future work: Facebook Messenger, Twitter and other platforms.
+Another thing to be added might be a website to explain the main use for this bot, you know, maybe a wiki –*kinda*– site? Besides that, the obvious developments are also considered for the future work: Facebook Messenger, Twitter and other platforms.
 
 Any other idea for this? Feel free to [contribute](https://github.com/RodolfoFerro/DisAtBot/blob/master/CONTRIBUTING.md)!
 
