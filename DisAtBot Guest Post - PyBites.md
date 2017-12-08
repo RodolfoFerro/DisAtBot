@@ -87,7 +87,9 @@ def menu(bot, update):
 
 As you can see, the `keyboard` variable is a list that contains the four buttons to be displayed, and the layout can be set by nesting lists inside. In this case the **Report** and **Map** buttons are in the first row, while **FAQ** and **About** buttons are in the second row. This will be displayed as follows:
 
-<img src="https://github.com/RodolfoFerro/DisAtBot/blob/master/imgs/screenshot_menu.jpg" width="50%">
+<center>
+<img src="https://github.com/RodolfoFerro/DisAtBot/blob/master/imgs/screenshot_menu.jpg" width="35%">
+</center>
 
 A demo of DisAtBot can be seen [in here](https://drive.google.com/file/d/1dOvF17AYKiic85HmzMjnK5Qza2Tg0PNw/view)!
 
