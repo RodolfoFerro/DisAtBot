@@ -16,16 +16,15 @@ What was created by that time, "[Verificado 19s](http://www.verificado19s.org/)"
 
 I've been thinking about a way to optimize this process for future situations, not only for earthquakes, but for other disaster situations (like, more in general). This is why I'm trying to create a solution, and why I wanted to work specifically with this bot, which will automate this task into a better way to face this situations in the future.
 
-## What’s the idea of DisAtBot?
+### What’s the idea of DisAtBot?
 
 DisAtBot would automate the process of reporting incidents via messaging platforms, such as Telegram, Facebook Messenger, Twitter, etc. This project may take several phases of development and a lot of contributions, too. So, at this time ***this first approach is considering only Telegram as the messaging platform only for this initial phase of implementation.***
 
 Until now, you can find DisAtBot in...
 
 - Telegram: [https://t.me/DisAtBot](https://t.me/DisAtBot)
-- More coming soon… (I hope!)
-
 - The official repo: [https://github.com/RodolfoFerro/DisAtBot](https://github.com/RodolfoFerro/DisAtBot)
+- More coming soon… (I hope!)
 
 The idea would be to have a simple flow that allow disaster reports be quick and easy. A general process of DisAtBot is described in the following (wireframing) flow:
 
