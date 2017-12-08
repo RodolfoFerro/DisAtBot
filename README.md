@@ -50,7 +50,6 @@ pip install -r requirements.txt
 The structure of this repo is as follows:
 
 - The [img](https://github.com/RodolfoFerro/dabot/tree/master/imgs) folder contains all images of this repo.
-- The [maps](https://github.com/RodolfoFerro/dabot/tree/master/maps) folder contains any map/geo-spacial document, such as geoJSON, etc.
 - The [scripts](https://github.com/RodolfoFerro/dabot/tree/master/scripts) folder contains all the scripts developed so far.
 - The [data](https://github.com/RodolfoFerro/dabot/tree/master/data) folder contains the geolocation database.
 - The [`requirements.txt`](https://github.com/RodolfoFerro/dabot/blob/master/requirements.txt) file contains a listing of the required packages with their respective versions for an easy `pip` installation. *Recommended.*
