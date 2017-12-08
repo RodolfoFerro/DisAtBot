@@ -8,6 +8,7 @@
 > – Emilio Viale, 1985.
 
 ## A bit of context...
+
 Since [September 19th, 2017](https://en.wikipedia.org/wiki/2017_Central_Mexico_earthquake) ([The Guardian](https://www.theguardian.com/world/live/2017/sep/20/mexico-city-earthquake-dozens-dead-powerful-quake-live-updates), [CNN](http://edition.cnn.com/2017/09/19/americas/mexico-earthquake/index.html)), and the following dates in which Mexico has faced several earthquakes, I've been wondering how could damaged zones reports, people buried under rests of buildings, injured people in need of medicines and other situations could be handled.
 
 What was created by that time, "[Verificado 19s](http://www.verificado19s.org/)", was an immediate solution to follow up reports from social media and visualize the info on a map embedded in a website. The thing is that there were a lot of people needed, that were all the time (24/7) monitoring posts in social networks (a.k.a. Facebook and Twitter) from people that were located in the damaged zone (in real time), and then the data was updated every ~10 minutes.
