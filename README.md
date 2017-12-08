@@ -65,14 +65,13 @@ The structure of this repo is as follows:
 
 ## Future work 📈
 
-* Create CONTRIBUTING file.
 * Create map visualization for messaging platforms.
 * Add a SQL type DB.
 * ...
 
 ## Contributing 👩🏽‍💻👨🏻‍💻
 
-Please check our [CONTRIBUTING]() file.
+Please check our [CONTRIBUTING](https://github.com/RodolfoFerro/DisAtBot/blob/master/CONTRIBUTING.md) file.
 
 #### Contributors list:
 * [Rodolfo Ferro](https://github.com/RodolfoFerro)
@@ -81,7 +80,7 @@ Please check our [CONTRIBUTING]() file.
 
 ## License 📄
 
-Please read the [LICENSE]() provided in this repo.
+Please read the [LICENSE](https://github.com/RodolfoFerro/DisAtBot/blob/master/LICENSE) provided in this repo.
 
 ### About the robot icon used...
 <div>Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors Market</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>.</div>
